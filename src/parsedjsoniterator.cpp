@@ -121,9 +121,12 @@ double ParsedJson::iterator::get_double()  const {
 }
 
 const char * ParsedJson::iterator::get_string() const {
-    return  reinterpret_cast<const char *>(pj.string_buf + (current_val & JSONVALUEMASK)) ;
+    return reinterpret_cast<const char *>(pj.string_buf + (current_val & JSONVALUEMASK) + (sizeof(uint32_t)/sizeof(uint8_t)));
 }
 
+uint32_t ParsedJson::iterator::get_string_length() const {
+	return *(pj.string_buf + (current_val & JSONVALUEMASK));
+}
 
 bool ParsedJson::iterator::is_object_or_array() const {
     return is_object_or_array(get_type());

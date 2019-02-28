@@ -71,17 +71,7 @@ int main(int argc, char *argv[]) {
 #else
   int optind = 1;
 #endif
-  if (optind >= argc) {
-    cerr << "Usage: " << argv[0] << " <jsonfile>" << endl;
-    exit(1);
-  }
-  const char *filename = argv[optind];
-  if (optind + 1 < argc) {
-    cerr << "warning: ignoring everything after " << argv[optind + 1] << endl;
-  }
-  if (verbose) {
-    cout << "[verbose] loading " << filename << endl;
-}
+  const char *filename = "C:\\prj\\simdjson-m\\jsonexamples\\gsoc-2018.json";
   std::string_view p;
   try {
     p = get_corpus(filename);
@@ -194,6 +184,24 @@ int main(int argc, char *argv[]) {
     std::cerr << "Could not parse. " << std::endl;
     return EXIT_FAILURE;
   }
+
+  ParsedJson::iterator iter(pj);
+  while (iter.move_forward())
+  {
+	  if (iter.is_string())
+	  {
+		  const char* ccc = iter.get_string();
+		  auto lenLen = iter.get_string_length();
+		  auto actualLen = strlen(ccc);
+		  if (lenLen != actualLen)
+		  {
+			  printf(":((");
+		  }
+
+	  }
+  }
+
+
 #ifndef SQUASH_COUNTERS
   unsigned long total = cy0 + cy1 + cy2;
   if (justdata) {
